@@ -1,0 +1,76 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model IEnumerable<Project_WebMVC.Models.Album>
+
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Index</h1>
+<form asp-action="Index" method="get">
+    Select brands:
+    <select name="genreId" asp-items="ViewBag.GenreIds"></select>
+    Find by name:
+    <input type="text" name="currentTitle" value="@ViewBag.CurrentTitle" />
+    <input type="submit" value="Search" />
+</form>
+
+
+    <div class=”container”>
+
+        <dl class="row" style=" display:flex">
+
+
+
+            @foreach (var item in Model)
+            {
+
+                <dd class="col-sm-4" style="border : solid; border-color : white; margin:7px; padding:0px 0px; width:240px">
+                    <img src="@Html.DisplayFor(modelItem => item.AlbumUrl)" />
+
+                <div style="color:dodgerblue">
+                        $@Html.DisplayFor(modelItem => item.Price)
+                    </div>
+                <div style="color:dodgerblue">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Artist.Name)
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Genre.Name)
+                    </div>
+                
+                <div>
+                    <a asp-action="AddToCart" asp-route-id="@item.AlbumId" class="btn btn-default" style="background-color:dodgerblue;color:white;">Add to cart</a>
+            </div>
+            </dd>
+            }
+        </dl>
+    </div>
+@if (ViewBag.Page > 0)
+{
+    <a href="@Url.Action("Index", new { page = ViewBag.Page - 1 })"
+   class="btn btn-default" style="background-color:dodgerblue;color:white;">
+             Prev
+    </a>
+}@if(ViewBag.Page == 0){
+     <a class="btn btn-default" style="background-color:lightblue;color:white;">
+         Prev
+    </a>
+}
+@if (ViewBag.Page < ViewBag.MaxPage)
+{
+    <a href="@Url.Action("Index", new { page = ViewBag.Page + 1 })"
+   class="btn btn-default" style="background-color:dodgerblue;color:white;">
+        Next 
+    </a>}
+    @if (ViewBag.Page == ViewBag.MaxPage)
+    {
+        <a class="btn btn-default" style="background-color:lightblue;color:white;">
+            Next
+        </a>
+}

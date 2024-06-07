@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Project_WebMVC.Models.Cart>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<body>
+<table class="table" >
+        @if(
+        @ViewBag.Total > 0){
+            <a href="@Url.Action("CheckOut","Shopping")"
+           class="btn btn-default" style="background-color:dodgerblue;color:white;">
+                CheckOut
+            </a>
+        }
+
+    <thead>
+        <tr>
+            <th>
+                Add
+            </th>
+            <th>
+                Count
+            </th>
+            <th>
+               Date created
+            </th>
+            <th>
+                Remove
+            </th>
+          
+        </tr>
+
+    </thead>
+     
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                        <a asp-action="Add" asp-route-id="@item.AlbumId"> @Html.DisplayFor(modelItem => item.Album.Title) </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td>
+                    <a asp-action="Remove" asp-route-id="@item.RecordId">Remove from cart</a>
+                </td>
+            </tr>
+          
+        }
+        
+    </tbody>
+       <tr>
+        TOTAL: @ViewBag.Total
+    </tr>
+</table>
+</body>
